@@ -5,9 +5,11 @@ import Image from "next/image";
 import "./styles/style.css";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Check, Heart, Mail, Menu, Phone, Search, ShoppingCart, X } from "lucide-react";
+import { Check, Heart, Mail, Menu, Phone, Search, ShoppingCart, User, X } from "lucide-react";
 
 import logo from "@/assets/midea/logo-icon/logo-jabakule-307x83.png";
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 const Navbar = () => {
   const [menuIsOpened, setMenuIsOpened] = useState<boolean>(false);
@@ -63,7 +65,17 @@ const Navbar = () => {
                   </button>
                 </div>
 
-                <DropdownMenu>
+                <Link href={"/auth/login"} className="assets-list-item text-left">
+                  <div className="menu-list-item">
+                    <User />
+                  </div>
+                  <span className="assets-money-emout auth-text">
+                    Login <br />
+                    <span className='lighter'>Registro</span>
+                  </span>
+                </Link>
+
+                {/* <DropdownMenu>
                   <DropdownMenuTrigger style={{ outline: "none" }}>
                     <div className="assets-profile">
                       <div className="profile-name">Ola, <span>afonso!</span></div>
@@ -75,7 +87,7 @@ const Navbar = () => {
                       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet distinctio animi explicabo unde magni adipisci sint numquam assumenda magnam eveniet mollitia, ipsam eius dolorem temporibus tempora impedit sit commodi sunt!
                     </div>
                   </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu> */}
               </div>
             </div>
           </div>
