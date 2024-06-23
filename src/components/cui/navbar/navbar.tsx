@@ -1,13 +1,17 @@
-import React from 'react'
-import "./styles/style.css";
+"use client";
+
+import React, { useState } from 'react'
 import Image from "next/image";
+import "./styles/style.css";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Check, Heart, Mail, Phone, Search, ShoppingCart, X } from "lucide-react";
+import { Check, Heart, Mail, Menu, Phone, Search, ShoppingCart, X } from "lucide-react";
 
 import logo from "@/assets/midea/logo-icon/logo-jabakule-307x83.png";
 
 const Navbar = () => {
+  const [menuIsOpened, setMenuIsOpened] = useState<boolean>(false);
+
   return (
     <header className="main_header">
       <div className="main-assets">
@@ -20,17 +24,20 @@ const Navbar = () => {
             </div>
 
             <div className="assets-center">
-              <div className="input-component">
+              <button className="input-component" onClick={() => alert()}>
                 <div className="icon">
                   <Search />
                 </div>
-                <input type="text" placeholder="Encontre o que procura..." />
+                <div className='sarch-text'>Encontre o que procura...</div>
+                
+                {/* Or a direct searcher component, just remove the comment... by Richard */}
+                {/* <input type="text" placeholder="Encontre o que procura..." />
                 <div className="cleaner-copper">
                   <button className="cursor-pointer">
                     <X />
                   </button>
-                </div>
-              </div>
+                </div> */}
+              </button>
             </div>
 
             <div className="assets-right">
@@ -47,6 +54,12 @@ const Navbar = () => {
                   <button className="menu-list-item">
                     <Heart />
                     <div className="assets-item-counter">99+</div>
+                  </button>
+                </div>
+
+                <div className="assets-list-item search-item-responsive">
+                  <button className="menu-list-item">
+                    <Search />
                   </button>
                 </div>
 
@@ -75,10 +88,10 @@ const Navbar = () => {
               <div className="nav-left-assets-copper">
                 <div className="selected-category">
                   <Check />
-                  Informatica
+                  Todas as categorias
                 </div>
 
-                <div className="nav-actions-list">
+                <div className="nav-actions-list" style={{left: menuIsOpened ? "0" : "-100%"}}>
                   <ul>
                     <li><a href="">Inicio</a></li>
                     <li><a href="">Produtos</a></li>
@@ -86,10 +99,35 @@ const Navbar = () => {
                     <li><a href="">Ver lojas</a></li>
                     <li><a href="">Industriais</a></li>
                   </ul>
+
+                  <div className="mobile-session">
+                    <div className="title">Informacoes de contacto</div>
+
+                    <ul>
+                      <li>
+                        <a href="">
+                          <Phone />
+                          +244 937146346
+                        </a>
+                        </li>
+                      <li>
+                        <a href="">
+                          <Mail />
+                          afonso1.nzango@gmail.com
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="nav-right-assets">
+              <div className="nav-contact mobile-button-icon">
+                <button className="icon" onClick={() => setMenuIsOpened((prev) => !prev)}>
+                  {menuIsOpened ? <X /> : <Menu />}
+                </button>
+              </div>
+
               <div className="nav-contact">
                 <div className="text">afonso1.nzango@gmail.com</div>
                 <div className="icon">
@@ -98,7 +136,7 @@ const Navbar = () => {
               </div>
 
               <div className="nav-contact">
-                <div className="text" style={{marginTop: 4}}><span>+244</span> 937146346</div>
+                <div className="text" style={{ marginTop: 4 }}><span>+244</span> 937146346</div>
                 <div className="icon">
                   <Phone />
                 </div>
