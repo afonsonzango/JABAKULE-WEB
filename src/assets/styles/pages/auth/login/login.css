@@ -1,1 +1,72 @@
-/*# sourceMappingURL=login.css.map */
+section.login-main-section .login-middle-section {
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin: auto;
+  min-width: 240px;
+  max-width: 340px;
+  margin-top: 80px;
+}
+section.login-main-section .login-middle-section .login-logo-center {
+  display: flex;
+  justify-content: center;
+}
+section.login-main-section .login-middle-section .login-logo-center img {
+  width: 120px;
+}
+section.login-main-section .login-middle-section .login-center {
+  display: flex;
+  justify-content: center;
+}
+section.login-main-section .login-middle-section .login-center span.login-center-text {
+  padding: 2px 15px;
+  border-radius: 6px;
+  background-color: rgb(var(--selected), 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+section.login-main-section .login-middle-section .login-check-points {
+  display: flex;
+  justify-content: space-between;
+}
+section.login-main-section .login-middle-section .login-check-points span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  font-weight: 500;
+}
+section.login-main-section .login-middle-section .login-check-points span .link-forgot-password {
+  text-decoration: underline;
+}
+section.login-main-section .login-middle-section .login-main-form .form-controller .form-input-component label {
+  font-size: 15px;
+  font-weight: 600;
+}
+section.login-main-section .login-middle-section .login-main-form .form-controller .form-input-component input {
+  width: 100%;
+  height: 45px;
+  border: 1px solid rgb(var(--dark), 0.1);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 15px;
+  color: rgb(var(--dark));
+  outline: none;
+}
+section.login-main-section .login-middle-section .login-main-form .form-controller .form-input-component input:focus {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(var(--selected));
+}
+section.login-main-section .login-middle-section .login-main-form .form-controller .form-input-component button {
+  background-color: rgb(var(--dark));
+  border-radius: 8px;
+  height: 45px;
+  width: 100%;
+  color: rgb(var(--light));
+  font-size: 15px;
+  font-weight: 600;
+}
+section.login-main-section .login-middle-section .login-main-form .form-controller .form-input-component button:focus {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(var(--selected));
+}/*# sourceMappingURL=login.css.map */

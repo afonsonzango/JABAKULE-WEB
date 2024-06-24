@@ -1,0 +1,93 @@
+section.login-main-section {
+    .login-middle-section {
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin: auto;
+        min-width: 240px;
+        max-width: 340px;
+        margin-top: 80px;
+
+        .login-logo-center {
+            display: flex;
+            justify-content: center;
+
+            
+            img {
+                width: 120px;
+            }
+        }
+
+        .login-center {
+            display: flex;
+            justify-content: center;
+
+            span.login-center-text {
+                padding: 2px 15px;
+                border-radius: 6px;
+                background-color: rgb(var(--selected),.2);
+                font-size: 14px;
+                font-weight: 600;
+                text-transform: capitalize;    
+            }
+        }
+
+        .login-check-points {
+            display: flex;
+            justify-content: space-between;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 15px;
+                font-weight: 600;
+                font-weight: 500;
+                
+                .link-forgot-password {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .login-main-form {
+            .form-controller {
+                .form-input-component {
+                    label {
+                        font-size: 15px;
+                        font-weight: 600;
+                    }
+
+                    input {
+                        width: 100%;
+                        height: 45px;
+                        border: 1px solid rgb(var(--dark),.1);
+                        border-radius: 8px;
+                        padding: 0 12px;
+                        font-size: 15px;
+                        color: rgb(var(--dark));
+                        outline: none;
+
+                        &:focus {
+                            box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(var(--selected)); 
+                        }
+                    }
+
+                    button {
+                        background-color: rgb(var(--dark));
+                        border-radius: 8px;
+                        height: 45px;
+                        width: 100%;
+                        color: rgb(var(--light));
+                        font-size: 15px;
+                        font-weight: 600;
+
+                        &:focus {
+                            box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(var(--selected)); 
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
