@@ -4,11 +4,10 @@ import React, { useState } from 'react'
 import Image from "next/image";
 import "./styles/style.css";
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+// import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Check, Heart, Mail, Menu, Phone, Search, ShoppingCart, User, X } from "lucide-react";
 
 import logo from "@/assets/midea/logo-icon/logo-jabakule-307x83.png";
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 const Navbar = () => {
@@ -21,7 +20,7 @@ const Navbar = () => {
           <div className="assets-align-copper">
             <div className="assets-left">
               <div className="logo-item">
-                <Image src={logo} alt={"jabakule logo"} />
+                <Image src={logo} alt={"jabakule logo"} priority />
               </div>
             </div>
 
@@ -105,11 +104,11 @@ const Navbar = () => {
 
                 <div className="nav-actions-list" style={{left: menuIsOpened ? "0" : "-100%"}}>
                   <ul>
-                    <li><a href="">Inicio</a></li>
-                    <li><a href="">Produtos</a></li>
-                    <li><a href="">Vendedores</a></li>
-                    <li><a href="">Ver lojas</a></li>
-                    <li><a href="">Industriais</a></li>
+                    <li><Link href={"/get-started"}>Inicio</Link></li>
+                    <li><Link href={"/products"}>Produtos</Link></li>
+                    <li><Link href={"/salers"}>Vendedores</Link></li>
+                    <li><Link href={"/stores"}>Ver Lojas</Link></li>
+                    <li><Link href={"/industrial"}>Industriais</Link></li>
                   </ul>
 
                   <div className="mobile-session">
