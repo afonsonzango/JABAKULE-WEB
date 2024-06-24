@@ -254,6 +254,24 @@ header.main_header .main-nav .main-nav-assets .nav-left-assets .nav-left-assets-
   font-weight: 500;
   gap: 20px;
 }
+header.main_header .main-nav .main-nav-assets .nav-left-assets .nav-left-assets-copper .nav-actions-list ul li a {
+  position: relative;
+}
+header.main_header .main-nav .main-nav-assets .nav-left-assets .nav-left-assets-copper .nav-actions-list ul li a.active {
+  font-weight: 800;
+}
+header.main_header .main-nav .main-nav-assets .nav-left-assets .nav-left-assets-copper .nav-actions-list ul li a.active::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 4px;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 10px;
+  background-color: rgb(var(--theme));
+}
 header.main_header .main-nav .main-nav-assets .nav-left-assets .nav-left-assets-copper .nav-actions-list .mobile-session {
   display: none;
 }

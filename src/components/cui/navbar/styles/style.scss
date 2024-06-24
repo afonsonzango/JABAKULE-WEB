@@ -278,6 +278,29 @@ header.main_header {
                             font-size: 15px;
                             font-weight: 500;
                             gap: 20px;
+
+                            li {
+                                a {
+                                    position: relative;
+
+                                    &.active {
+                                        font-weight: 800;
+                                    }
+
+                                    &.active::after {
+                                        content: "";
+                                        position: absolute;
+                                        width: 30px;
+                                        height: 4px;
+                                        bottom: -5px;
+                                        left: 0;
+                                        right: 0;
+                                        margin: auto;
+                                        border-radius: 10px;
+                                        background-color: rgb(var(--theme));
+                                    }
+                                }
+                            }
                         }
 
                         .mobile-session {

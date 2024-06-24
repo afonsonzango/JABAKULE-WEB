@@ -9,6 +9,7 @@ import { Check, Heart, Mail, Menu, Phone, Search, ShoppingCart, User, X } from "
 
 import logo from "@/assets/midea/logo-icon/logo-jabakule-307x83.png";
 import Link from 'next/link';
+import NavLink from '../hooks/navlink';
 
 const Navbar = () => {
   const [menuIsOpened, setMenuIsOpened] = useState<boolean>(false);
@@ -104,11 +105,11 @@ const Navbar = () => {
 
                 <div className="nav-actions-list" style={{left: menuIsOpened ? "0" : "-100%"}}>
                   <ul>
-                    <li><Link href={"/get-started"}>Inicio</Link></li>
-                    <li><Link href={"/products"}>Produtos</Link></li>
-                    <li><Link href={"/salers"}>Vendedores</Link></li>
-                    <li><Link href={"/stores"}>Ver Lojas</Link></li>
-                    <li><Link href={"/industrial"}>Industriais</Link></li>
+                    <li><NavLink href={"/get-started"} activeClassName={"active"}>Inicio</NavLink></li>
+                    <li><NavLink href={"/products"} activeClassName={"active"}>Produtos</NavLink></li>
+                    <li><NavLink href={"/salers"} activeClassName={"active"}>Vendedores</NavLink></li>
+                    <li><NavLink href={"/stores"} activeClassName={"active"}>Ver Lojas</NavLink></li>
+                    <li><NavLink href={"/industrial"} activeClassName={"active"}>Industriais</NavLink></li>
                   </ul>
 
                   <div className="mobile-session">
