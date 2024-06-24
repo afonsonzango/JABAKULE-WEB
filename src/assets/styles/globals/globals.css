@@ -7,6 +7,7 @@
   --dark: 0, 0, 0;
   --theme: 139, 0, 0;
   --selected: 52, 146, 253;
+  --positive: 40, 167, 69;
 }
 
 @layer base {

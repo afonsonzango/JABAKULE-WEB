@@ -1,6 +1,7 @@
 header.main_header {
   position: sticky;
   width: 100%;
+  z-index: 10;
   top: 0;
 }
 header.main_header .main-assets {
