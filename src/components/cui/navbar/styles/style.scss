@@ -447,6 +447,9 @@ header.main_header {
     gap: 20px;
     flex: 0;
 
+    @media (max-width: 991px) {
+        display: block;
+    }
 
     .container-products-list {
         width: 100%;
@@ -460,11 +463,19 @@ header.main_header {
                 padding-bottom: 15px;
                 margin-bottom: 15px;
 
+                @media (max-width: 539px) {
+                    display: block;
+                }
+
                 .text {
                     font-size: 25px;
                     font-weight: 800;
                     color: rgb(var(--dark));
                     text-transform: capitalize;
+
+                    @media (max-width: 539px) {
+                        margin-bottom: 10px;
+                    }
                 }
 
                 .action {
@@ -519,99 +530,124 @@ header.main_header {
                         }
                     }
 
-                    .product-details {
+                    .details-quantity-flex {
                         display: flex;
-                        align-items: center;
                         width: 100%;
 
-                        .name {
-                            font-size: 16px;
-                            font-weight: 800;
+                        @media (max-width: 800px) {
+                            display: block;
                         }
 
-                        .price {
+                        .product-details {
                             display: flex;
-                            margin-top: 2px;
-                            gap: 20px;
                             align-items: center;
+                            width: 100%;
 
-                            .price-primary {
-                                font-size: 15px;
+                            .name {
+                                font-size: 16px;
                                 font-weight: 800;
-                                color: rgb(var(--theme));
                             }
 
-                            .price-singular {
-                                font-size: 12px;
-                                font-weight: 600;
-                                color: rgb(var(--dark), .6);
+                            .price {
+                                display: flex;
+                                margin-top: 2px;
+                                gap: 20px;
+                                align-items: center;
 
-                                &::before {
-                                    content: "- Cada "
+                                @media (max-width: 539px) {
+                                    display: block;
+                                }
+
+                                .price-primary {
+                                    font-size: 15px;
+                                    font-weight: 800;
+                                    color: rgb(var(--theme));
+
+                                    @media (max-width: 539px) {
+                                        margin-right: 10px;
+                                    }    
+                                }
+
+                                .price-singular {
+                                    font-size: 12px;
+                                    font-weight: 600;
+                                    color: rgb(var(--dark), .6);
+
+                                    &::before {
+                                        content: "- Cada "
+                                    }
+                                }
+                            }
+
+                            .detail {
+                                border-radius: 20px;
+                                font-size: 15px;
+                                font-weight: 600;
+                                display: flex;
+                                margin-top: 5px;
+                                gap: 5px;
+                                align-items: center;
+
+                                @media (max-width: 539px) {
+                                    display: block;
+                                }
+
+                                .details-frete {
+                                    border-radius: 20px;
+                                    background-color: rgb(var(--dark), .1);
+                                    color: rgb(var(--dark));
+                                    padding: 0 10px;
+                                }
+
+                                .details-loja {
+                                    border-radius: 20px;
+                                    padding: 0 10px;
+                                    font-size: 13px;
+                                    cursor: pointer;
+
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
                                 }
                             }
                         }
 
-                        .detail {
-                            border-radius: 20px;
-                            font-size: 15px;
-                            font-weight: 600;
+                        .quantity-section {
                             display: flex;
-                            margin-top: 5px;
-                            gap: 5px;
                             align-items: center;
+                            gap: 10px;
 
-                            .details-frete {
-                                border-radius: 20px;
-                                background-color: rgb(var(--dark), .1);
-                                color: rgb(var(--dark));
-                                padding: 0 10px;
+                            @media (max-width: 800px) {
+                                margin-top: 20px;
                             }
 
-                            .details-loja {
-                                border-radius: 20px;
-                                padding: 0 10px;
-                                font-size: 13px;
+                            input {
+                                width: 60px;
+                                height: 35px;
+                                border: 1px solid rgb(var(--dark), .2);
+                                border-radius: 10px;
+                                text-align: center;
+                                font-size: 15px;
+                                font-weight: 600;
+                            }
+
+                            button {
+                                width: 35px;
+                                height: 35px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
                                 cursor: pointer;
+                                border-radius: 40px;
+
+                                svg {
+                                    width: 20px;
+                                    height: 20px;
+                                }
 
                                 &:hover {
-                                    text-decoration: underline;
+                                    background-color: rgb(var(--dark), .2);
                                 }
-                            }
-                        }
-                    }
-
-                    .quantity-section {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-
-                        input {
-                            width: 60px;
-                            height: 35px;
-                            border: 1px solid rgb(var(--dark), .2);
-                            border-radius: 10px;
-                            text-align: center;
-                            font-size: 15px;
-                            font-weight: 600;
-                        }
-
-                        button {
-                            width: 35px;
-                            height: 35px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            cursor: pointer;
-                            border-radius: 40px;
-
-                            svg {
-                                width: 20px;
-                                height: 20px;
-                            }
-
-                            &:hover {
-                                background-color: rgb(var(--dark),.2);
                             }
                         }
                     }
@@ -626,7 +662,7 @@ header.main_header {
                         cursor: pointer;
 
                         &:hover {
-                            background-color: rgb(var(--theme),.6);
+                            background-color: rgb(var(--theme), .6);
                         }
                     }
                 }
@@ -636,6 +672,7 @@ header.main_header {
 
     .container-payment-status {
         display: flex;
+        justify-content: center;
         gap: 60px;
 
         div.c-flex {
@@ -643,6 +680,10 @@ header.main_header {
             border: 1px solid rgb(var(--dark), .2);
             border-radius: 10px;
             overflow: hidden;
+
+            @media (max-width: 991px) {
+                width: 100%;
+            }
 
             .c-flex-topbar {
                 padding: 10px 20px;

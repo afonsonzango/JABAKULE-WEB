@@ -1,0 +1,134 @@
+section.register-main-section {
+    padding: 50px 0;
+
+    .logo-center {
+        width: 130px;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .register-center {
+        display: flex;
+        justify-content: center;
+        margin-top: 14px;
+
+        span.register-center-text {
+            padding: 2px 15px;
+            border-radius: 6px;
+            background-color: rgb(var(--selected), .2);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+    }
+
+    .register-form-container {
+        max-width: 700px;
+        min-width: 250px;
+        width: 100%;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        .register-main-form {
+            .form-controller {
+                .title-section {
+                    font-size: 18px;
+                    color: rgb(var(--dark));
+                    font-weight: 800;
+                    margin-bottom: 10px;
+                }
+
+                .form-controller-dual {
+                    display: flex;
+                    gap: 20px;
+
+                    .form-input-component {
+                        width: 100%;
+                    }
+                }
+
+                .form-input-component {
+                    label {
+                        font-size: 15px;
+                        font-weight: 600;
+                    }
+
+                    input {
+                        width: 100%;
+                        height: 45px;
+                        border: 1px solid rgb(var(--dark), .1);
+                        border-radius: 8px;
+                        padding: 0 12px;
+                        font-size: 15px;
+                        color: rgb(var(--dark));
+                        outline: none;
+
+                        &:focus {
+                            box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(var(--selected));
+                        }
+                    }
+
+                    button {
+                        background-color: rgb(var(--dark));
+                        border-radius: 8px;
+                        height: 45px;
+                        width: 100%;
+                        color: rgb(var(--light));
+                        font-size: 15px;
+                        font-weight: 600;
+
+                        &:focus {
+                            box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(var(--selected));
+                        }
+
+                        .register-main-form {
+                            .form-controller {
+                                .form-input-component {
+                                    label {
+                                        font-size: 15px;
+                                        font-weight: 600;
+                                    }
+
+                                    input {
+                                        width: 100%;
+                                        height: 45px;
+                                        border: 1px solid rgb(var(--dark), .1);
+                                        border-radius: 8px;
+                                        padding: 0 12px;
+                                        font-size: 15px;
+                                        color: rgb(var(--dark));
+                                        outline: none;
+
+                                        &:focus {
+                                            box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(var(--selected));
+                                        }
+                                    }
+
+                                    button {
+                                        background-color: rgb(var(--dark));
+                                        border-radius: 8px;
+                                        height: 45px;
+                                        width: 100%;
+                                        color: rgb(var(--light));
+                                        font-size: 15px;
+                                        font-weight: 600;
+
+                                        &:focus {
+                                            box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(var(--selected));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
