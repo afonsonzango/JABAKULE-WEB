@@ -128,4 +128,26 @@
 .products-container .card .card-body .card-action button.card-reserve-btn:active {
   transition: 0.08s;
   opacity: 0.5;
+}
+
+.error-handleing {
+  margin-top: 40px;
+}
+.error-handleing .button-position-handleing {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+}
+.error-handleing .button-position-handleing button {
+  background-color: rgb(var(--dark));
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  height: 35px;
+  transition: 0.2s;
+}
+.error-handleing .button-position-handleing button:active {
+  transition: 0.08s;
+  opacity: 0.6;
 }/*# sourceMappingURL=products.css.map */

@@ -145,3 +145,28 @@
         }
     }
 }
+
+.error-handleing {
+    margin-top: 40px;
+
+    .button-position-handleing {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        width: 100%;
+
+        button {
+            background-color: rgb(var(--dark));
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            height: 35px;
+            transition: .2s;
+            
+            &:active {
+                transition: .08s;
+                opacity: .6;
+            }
+        }
+    }
+}

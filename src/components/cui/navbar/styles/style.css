@@ -378,4 +378,281 @@ header.main_header .main-nav .main-nav-assets .nav-right-assets .nav-contact .ic
 }
 .dropdown-menu-restyle .dropdown-container {
   padding: 5px 10px;
+}
+
+.drawer-container::after, .drawer-container *::after {
+  display: none;
+}
+
+.container-copper {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  flex: 0;
+}
+.container-copper .container-products-list {
+  width: 100%;
+}
+.container-copper .container-products-list .products-fields-list .topbar-list-products {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgb(var(--dark), 0.1);
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+.container-copper .container-products-list .products-fields-list .topbar-list-products .text {
+  font-size: 25px;
+  font-weight: 800;
+  color: rgb(var(--dark));
+  text-transform: capitalize;
+}
+.container-copper .container-products-list .products-fields-list .topbar-list-products .action button {
+  padding: 6px 20px;
+  border-radius: 10px;
+  background-color: rgb(var(--theme));
+  color: rgb(var(--light));
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  transition: 0.2s;
+  gap: 10px;
+}
+.container-copper .container-products-list .products-fields-list .topbar-list-products .action button svg {
+  width: 20px;
+  height: 20px;
+}
+.container-copper .container-products-list .products-fields-list .topbar-list-products .action button:active {
+  transition: 0.08s;
+  opacity: 0.5;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product {
+  padding: 6px;
+  background-color: rgb(var(--dark), 0.06);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-image {
+  width: -moz-max-content;
+  width: max-content;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-image div {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: rgb(var(--dark), 0.05);
+  display: flex;
+  align-items: center;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-image div img {
+  width: 100%;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details .name {
+  font-size: 16px;
+  font-weight: 800;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details .price {
+  display: flex;
+  margin-top: 2px;
+  gap: 20px;
+  align-items: center;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details .price .price-primary {
+  font-size: 15px;
+  font-weight: 800;
+  color: rgb(var(--theme));
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details .price .price-singular {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(var(--dark), 0.6);
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details .price .price-singular::before {
+  content: "- Cada ";
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details .detail {
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  margin-top: 5px;
+  gap: 5px;
+  align-items: center;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details .detail .details-frete {
+  border-radius: 20px;
+  background-color: rgb(var(--dark), 0.1);
+  color: rgb(var(--dark));
+  padding: 0 10px;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details .detail .details-loja {
+  border-radius: 20px;
+  padding: 0 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .product-details .detail .details-loja:hover {
+  text-decoration: underline;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .quantity-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .quantity-section input {
+  width: 60px;
+  height: 35px;
+  border: 1px solid rgb(var(--dark), 0.2);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .quantity-section button {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 40px;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .quantity-section button svg {
+  width: 20px;
+  height: 20px;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .quantity-section button:hover {
+  background-color: rgb(var(--dark), 0.2);
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .delete-button {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  color: rgb(var(--dark));
+  cursor: pointer;
+}
+.container-copper .container-products-list .products-fields-list .product-list .product .delete-button:hover {
+  background-color: rgb(var(--theme), 0.6);
+}
+.container-copper .container-payment-status {
+  display: flex;
+  gap: 60px;
+}
+.container-copper .container-payment-status div.c-flex {
+  width: 500px;
+  border: 1px solid rgb(var(--dark), 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-topbar {
+  padding: 10px 20px;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(var(--dark), 0.1);
+  align-items: center;
+  display: flex;
+  background-color: rgb(var(--theme), 0.1);
+}
+.container-copper .container-payment-status div.c-flex .c-flex-topbar span {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgb(var(--dark));
+}
+.container-copper .container-payment-status div.c-flex .c-flex-topbar button {
+  padding: 5px 15px;
+  background-color: rgb(var(--dark));
+  border-radius: 8px;
+  color: rgb(var(--light));
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.12s;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-topbar button svg {
+  width: 20px;
+  height: 20px;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-topbar button:active {
+  transition: 0.08s;
+  opacity: 0.8;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container {
+  padding: 20px 20px;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .inf-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgb(var(--dark));
+  align-items: center;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .inf-line .inf-item.value {
+  font-weight: 800;
+  color: rgb(var(--theme));
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .inf-line.devider {
+  border-top: 1px solid rgb(var(--dark), 0.1);
+  margin-top: 20px;
+  padding-top: 20px;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .actions-button button {
+  width: 100%;
+  padding: 15px 20px;
+  background-color: rgb(var(--dark));
+  border-radius: 8px;
+  color: rgb(var(--light));
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  transition: 0.12s;
+  justify-content: center;
+  text-transform: capitalize;
+  gap: 10px;
+  margin-top: 24px;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .cart-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .cart-image img {
+  width: 100%;
+  min-width: 250px;
+  max-width: 240px;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .cart-protect-information {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-top: 30px;
+  background-color: rgb(var(--selected), 0.1);
+  border: 2px solid rgb(var(--selected));
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .cart-protect-information .title {
+  font-size: 16px;
+  font-weight: 800;
+  color: rgb(var(--dark));
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .cart-protect-information .title svg {
+  width: 20px;
+  height: 20px;
+}
+.container-copper .container-payment-status div.c-flex .c-flex-payment-container .cart-protect-information .desc {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgb(var(--dark));
 }/*# sourceMappingURL=style.css.map */
