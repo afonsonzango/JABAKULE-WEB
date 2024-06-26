@@ -44,6 +44,11 @@ section.register-main-section .register-form-container .register-main-form .form
 section.register-main-section .register-form-container .register-main-form .form-controller .form-controller-dual .form-input-component {
   width: 100%;
 }
+@media (max-width: 991px) {
+  section.register-main-section .register-form-container .register-main-form .form-controller .form-controller-dual {
+    display: block;
+  }
+}
 section.register-main-section .register-form-container .register-main-form .form-controller .form-input-component label {
   font-size: 15px;
   font-weight: 600;
@@ -133,4 +138,47 @@ section.register-main-section .register-form-container .register-main-form .form
   align-items: center;
   font-weight: 600;
   margin-bottom: 10px;
+}
+
+.center-middle-element {
+  width: 100%;
+  max-width: 500px;
+  min-width: 240px;
+  padding: 20px;
+  background-color: rgb(var(--selected), 0.2);
+  border-radius: 10px;
+  border: 2px solid rgb(var(--selected), 0.5);
+}
+.center-middle-element .center-success {
+  padding: 4px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: rgb(var(--dark), 0.1);
+  border-radius: 10px;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.center-middle-element .center-text {
+  font-size: 15px;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.center-middle-element .center-link {
+  display: flex;
+  justify-content: center;
+}
+.center-middle-element .center-link a {
+  font-size: 15px;
+  padding: 7px 20px;
+  border-radius: 10px;
+  background: rgb(var(--dark));
+  color: rgb(var(--light));
+  font-weight: 600;
+}
+.center-middle-element .center-link a:active {
+  opacity: 0.6;
 }/*# sourceMappingURL=register.css.map */

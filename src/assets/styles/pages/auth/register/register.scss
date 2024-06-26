@@ -51,6 +51,10 @@ section.register-main-section {
                     .form-input-component {
                         width: 100%;
                     }
+
+                    @media (max-width: 991px) {
+                        display: block;
+                    }
                 }
 
                 .form-input-component {
@@ -164,4 +168,51 @@ section.register-main-section {
     align-items: center;
     font-weight: 600;
     margin-bottom: 10px;
+}
+
+.center-middle-element {
+    width: 100%;
+    max-width: 500px;
+    min-width: 240px;
+    padding: 20px;
+    background-color: rgb(var(--selected), .2);
+    border-radius: 10px;
+    border: 2px solid rgb(var(--selected),.5);
+    
+    .center-success {
+        padding: 4px 15px;
+        font-size: 15px;
+        font-weight: 600;
+        background-color: rgb(var(--dark), .1);
+        border-radius: 10px;
+        max-width: max-content;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    .center-text {
+        font-size: 15px;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .center-link {
+        display: flex;
+        justify-content: center;
+
+        a {
+            font-size: 15px;
+            padding: 7px 20px;
+            border-radius: 10px;
+            background: rgb(var(--dark));
+            color: rgb(var(--light));
+            font-weight: 600;
+
+            &:active {
+                opacity: .6;
+            }
+        }
+    }
 }

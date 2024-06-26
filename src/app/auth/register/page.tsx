@@ -9,8 +9,9 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { useEffect, useState } from "react";
 import axios from "axios";
 import WaveLoader from "@/components/cui/wave-loader/wave-loader";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, CheckCircle } from "lucide-react";
 import axiosSimple from "@/components/cui/hooks/axiosInstances/axiosSimple";
+import { redirect } from "next/navigation";
 
 interface User {
   name: string | undefined;
@@ -19,7 +20,7 @@ interface User {
   country: string | undefined;
   province: string | undefined;
   address: string | undefined;
-  phone: number | undefined;
+  phone: string | undefined;
   password: string | undefined;
   password_confirmation: string | undefined;
 }
@@ -27,6 +28,7 @@ interface User {
 const Page = () => {
   const [countries, setCountries] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [registered, setRegistered] = useState<boolean>(false);
 
   const [user, setUser] = useState<User>({
     name: undefined,
@@ -46,7 +48,32 @@ const Page = () => {
     setError("");
   }, [user]);
 
-  const RegisterValidation = () => {
+  useEffect(() => {
+    const fetchCountries = async () => {
+      setLoading(true);
+
+      try {
+        const res = await axios.get("http://api.geonames.org/countryInfoJSON?username=jabakuleteste");
+
+        console.log(res);
+
+        const formattedCountries = res.data.geonames.map((country: any) => ({
+          name: country.countryName,
+        }));
+
+        setCountries(formattedCountries);
+      } catch (error) {
+        setError("Erro ao buscar países, tente novamente mais tarde");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
 
     const { name, email, nif, country, province, address, phone, password, password_confirmation } = user;
 
@@ -95,42 +122,10 @@ const Page = () => {
       return;
     }
 
-    setError("");
-  }
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      setLoading(true);
-
-      try {
-        const res = await axios.get("http://api.geonames.org/countryInfoJSON?username=jabakuleteste");
-
-        console.log(res);
-
-        const formattedCountries = res.data.geonames.map((country: any) => ({
-          name: country.countryName,
-        }));
-
-        setCountries(formattedCountries);
-      } catch (error) {
-        setError("Erro ao buscar países, tente novamente mais tarde");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCountries();
-  }, []);
-
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-
-    RegisterValidation();
-
     setLoading(true);
 
     try {
-      const res = await axiosSimple.post(`/user/create`, {
+      await axiosSimple.post(`/user/create`, {
         name: user.name,
         email: user.email,
         nif: user.nif,
@@ -141,12 +136,28 @@ const Page = () => {
         password: user.password
       });
 
-      console.log(res);
+      setUser({
+        ...user,
+        email: undefined,
+        nif: undefined,
+        country: undefined,
+        province: undefined,
+        address: undefined,
+        phone: undefined,
+        password: undefined,
+        password_confirmation: undefined
+      })
+
+      setRegistered(true);
     } catch (error: any) {
       if (error.code === "ERR_NETWORK") {
         setError("Verifique sua connexao com a internet.");
-      }else{
-        setError("Algo de errado aconteceu, tente novamente mais tarde");
+      } else {
+        if (error.response.data.message) {
+          setError(error.response.data.message);
+        } else {
+          setError("Algo de errado aconteceu, tente novamente mais tarde");
+        }
       }
     } finally {
       setLoading(false);
@@ -174,130 +185,154 @@ const Page = () => {
         )}
 
         {loading ? (<WaveLoader />) : (
-          <div className="register-form-container">
-            <form onSubmit={(e) => handleSubmit(e)} className="register-main-form">
-              <div className="form-controller">
-                <div className="mb-5">
-                  <div className="title-section">Informacoes pessoais</div>
-                  <div className="form-controller-dual">
-                    <div className="form-input-component mb-1">
-                      <div>
-                        <label htmlFor="email">Nome</label>
-                      </div>
-                      <div>
-                        <input disabled={loading} value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} type="text" name="name" id="name" placeholder="Digite seu nome" />
-                      </div>
-                    </div>
-                    <div className="form-input-component mb-1">
-                      <div>
-                        <label htmlFor="email">E-mail</label>
-                      </div>
-                      <div>
-                        <input disabled={loading} value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} type="text" name="email" id="email" placeholder="Digite seu e-mail" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-controller-dual">
-                    <div className="form-input-component mb-1">
-                      <div>
-                        <label htmlFor="nif">NIF</label>
-                      </div>
-                      <div>
-                        <input disabled={loading} value={user.nif} onChange={(e) => setUser({ ...user, nif: e.target.value })} type="text" name="nif" id="nif" placeholder="Digite seu nif" />
-                      </div>
-                    </div>
-                    <div className="form-input-component mb-1">
-                      <div>
-                        <label htmlFor="email">Pais</label>
-                      </div>
-                      <div>
-                        <Select disabled={loading} value={user.country} onValueChange={(value: string) => setUser({ ...user, country: value })}>
-                          <SelectTrigger className="w-[180px]" style={{ background: "rgb(var(--light))", color: "rgb(var(--dark))" }}>
-                            <SelectValue placeholder={"Selecione seu pais" || user.country} />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Selecione seu pais</SelectLabel>
-
-                              {countries?.map((country: any) => {
-                                return (
-                                  <SelectItem value={country.name}>{country.name}</SelectItem>
-                                )
-                              })}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                    <div className="form-input-component mb-1">
-                      <div>
-                        <label htmlFor="email">Provincia</label>
-                      </div>
-                      <div>
-                        <input value={user.province} disabled={!user.country || loading} onChange={(e) => setUser({ ...user, province: e.target.value })} type="text" name="provincia" id="provincia" placeholder="Digite sua provincia" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="form-controller-dual">
-                  <div className="form-input-component mb-1">
-                    <div>
-                      <label htmlFor="email">Endereco</label>
-                    </div>
-                    <div>
-                      <input value={user.address} disabled={loading} onChange={(e) => setUser({ ...user, address: e.target.value })} type="text" name="address" id="address" placeholder="Digite seu endereco" />
-                    </div>
-                  </div>
-                  <div className="form-input-component mb-1">
-                    <div>
-                      <label htmlFor="email">Telefone</label>
-                    </div>
-                    <div>
-                      <input value={Number(user.phone)} disabled={loading} onChange={(e) => setUser({ ...user, phone: Number(e.target.value) })} type="text" name="email" id="telefone" placeholder="Digite seu telefone" />
-                    </div>
-                  </div>
-                </div>
-
-
-                <div className="mb-5">
-                  <div className="title-section">Seguranca e autenticacao</div>
-
-                  <div className="form-controller-dual">
-                    <div className="form-input-component mb-3">
-                      <div>
-                        <label htmlFor="password">Password</label>
-                      </div>
-                      <div>
-                        <input value={user.password} disabled={loading} onChange={(e) => setUser({ ...user, password: e.target.value })} type="text" name="password" id="password" placeholder="Digite sua password" />
-                      </div>
-                    </div>
-                    <div className="form-input-component mb-3">
-                      <div>
-                        <label htmlFor="password">Password - Confimacao</label>
-                      </div>
-                      <div>
-                        <input value={user.password_confirmation} disabled={loading} onChange={(e) => setUser({ ...user, password_confirmation: e.target.value })} type="text" name="password" id="password" placeholder="Digite sua password" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="form-input-component mb-1">
-                  <button disabled={loading} className="submit-button" type={"submit"}>
-                    {loading ? (<WaveLoader theme={"rgb(var(--light))"} style={{ transform: "scale(.7)", marginTop: -2 }} />) : "Register"}
-                  </button>
+          registered ? (
+            <div className="flex justify-center">
+              <div className="center-middle-element">
+                <div className="center-success">Sucesso!</div>
+                <div className="center-text">Sua conta foi criada com sucesso, accesse a tela de login!</div>
+                <div className="center-link">
+                  <Link href={"/auth/login"}>Fazer login</Link>
                 </div>
               </div>
-            </form>
-
-            <div className="register-auth-options">
-              <Link rel="stylesheet" href="/auth/login">Entrar - Login</Link>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="register-form-container">
+              <form onSubmit={(e) => handleSubmit(e)} className="register-main-form">
+                <div className="form-controller">
+                  <div className="mb-5">
+                    <div className="title-section">Informacoes pessoais</div>
+                    <div className="form-controller-dual">
+                      <div className="form-input-component mb-1">
+                        <div>
+                          <label htmlFor="email">Nome</label>
+                        </div>
+                        <div>
+                          <input disabled={loading} value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} type="text" name="name" id="name" placeholder="Digite seu nome" />
+                        </div>
+                      </div>
+                      <div className="form-input-component mb-1">
+                        <div>
+                          <label htmlFor="email">E-mail</label>
+                        </div>
+                        <div>
+                          <input disabled={loading} value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} type="text" name="email" id="email" placeholder="Digite seu e-mail" />
+                        </div>
+                      </div>
+                    </div>
 
+                    <div className="form-controller-dual">
+                      <div className="form-input-component mb-1">
+                        <div>
+                          <label htmlFor="nif">NIF</label>
+                        </div>
+                        <div>
+                          <input disabled={loading} value={user.nif} onChange={(e) => setUser({ ...user, nif: e.target.value })} type="text" name="nif" id="nif" placeholder="Digite seu nif" />
+                        </div>
+                      </div>
+                      <div className="form-input-component mb-1">
+                        <div>
+                          <label htmlFor="email">Pais</label>
+                        </div>
+                        <div>
+                          <Select disabled={loading} value={user.country} onValueChange={(value: string) => setUser({ ...user, country: value })}>
+                            <SelectTrigger className="w-[180px]" style={{ background: "rgb(var(--light))", color: "rgb(var(--dark))" }}>
+                              <SelectValue placeholder={"Selecione seu pais" || user.country} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Selecione seu pais</SelectLabel>
+
+                                {countries?.map((country: any) => {
+                                  return (
+                                    <SelectItem value={country.name}>{country.name}</SelectItem>
+                                  )
+                                })}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                      <div className="form-input-component mb-1">
+                        <div>
+                          <label htmlFor="email">Provincia</label>
+                        </div>
+                        <div>
+                          <input value={user.province} disabled={!user.country || loading} onChange={(e) => setUser({ ...user, province: e.target.value })} type="text" name="provincia" id="provincia" placeholder="Digite sua provincia" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="form-controller-dual">
+                    <div className="form-input-component mb-1">
+                      <div>
+                        <label htmlFor="email">Endereco</label>
+                      </div>
+                      <div>
+                        <input value={user.address} disabled={loading} onChange={(e) => setUser({ ...user, address: e.target.value })} type="text" name="address" id="address" placeholder="Digite seu endereco" />
+                      </div>
+                    </div>
+                    <div className="form-input-component mb-1">
+                      <div>
+                        <label htmlFor="email">Telefone</label>
+                      </div>
+                      <div>
+                        <input
+                          value={user.phone}
+                          disabled={loading}
+                          onChange={(e) => {
+                            const re = /^[0-9\b]+$/;
+                            if ((e.target.value === '' || re.test(e.target.value)) && e.target.value.length <= 9) {
+                              setUser({ ...user, phone: e.target.value });
+                            }
+                          }}
+                          type="text"
+                          name="phone"
+                          id="telefone"
+                          placeholder="Digite seu telefone"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div className="mb-5 mt-8">
+                    <div className="title-section">Seguranca e autenticacao</div>
+
+                    <div className="form-controller-dual">
+                      <div className="form-input-component mb-3">
+                        <div>
+                          <label htmlFor="password">Password</label>
+                        </div>
+                        <div>
+                          <input value={user.password} disabled={loading} onChange={(e) => setUser({ ...user, password: e.target.value })} type="text" name="password" id="password" placeholder="Digite sua password" />
+                        </div>
+                      </div>
+                      <div className="form-input-component mb-3">
+                        <div>
+                          <label htmlFor="password">Password - Confimacao</label>
+                        </div>
+                        <div>
+                          <input value={user.password_confirmation} disabled={loading} onChange={(e) => setUser({ ...user, password_confirmation: e.target.value })} type="text" name="password" id="password" placeholder="Digite sua password" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="form-input-component mb-1">
+                    <button disabled={loading} className="submit-button" type={"submit"}>
+                      {loading ? (<WaveLoader theme={"rgb(var(--light))"} style={{ transform: "scale(.7)", marginTop: -2 }} />) : "Register"}
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <div className="register-auth-options">
+                <Link rel="stylesheet" href="/auth/login">Entrar - Login</Link>
+              </div>
+            </div>
+          )
+        )}
       </div>
     </section >
   )
