@@ -69,4 +69,18 @@ section.login-main-section .login-middle-section .login-main-form .form-controll
 }
 section.login-main-section .login-middle-section .login-main-form .form-controller .form-input-component button:focus {
   box-shadow: 0 0 0 2px white, 0 0 0 4px rgb(var(--selected));
+}
+
+.login-auth-options {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.login-auth-options a {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgb(var(--dark));
+}
+.login-auth-options a:hover {
+  text-decoration: underline;
 }/*# sourceMappingURL=login.css.map */

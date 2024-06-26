@@ -46,7 +46,7 @@ const Page = () => {
           </form>
 
           <div className="login-auth-options">
-
+            <Link rel="stylesheet" href="/auth/register">Criar nova conta</Link>
           </div>
         </div>
       </div>
