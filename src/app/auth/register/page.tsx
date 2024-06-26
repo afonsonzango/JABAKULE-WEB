@@ -2,7 +2,6 @@ import "@/assets/styles/pages/auth/register/register.css";
 import Image from "next/image";
 
 import logo from "@/assets/midea/logo-icon/logo-jabakule-307x83.png";
-import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 
 const Page = () => {
@@ -10,7 +9,9 @@ const Page = () => {
     <section className="register-main-section">
       <div className="container">
         <div className="logo-center mb-3">
-          <Image src={logo} alt={"Logo center element"} />
+          <Link href={"/"}>
+            <Image priority src={logo} alt={"Logo center element"} />
+          </Link>
         </div>
 
         <div className="register-center mb-3">

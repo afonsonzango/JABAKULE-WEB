@@ -11,7 +11,7 @@ const Page = () => {
         <div className="login-middle-section">
           <div className="login-logo-center mb-3">
             <Link href={"/"}>
-              <Image src={logo} alt={"Logotipo Jabakule"} />
+              <Image priority src={logo} alt={"Logotipo Jabakule"} />
             </Link>
           </div>
           <div className="login-center mb-3">

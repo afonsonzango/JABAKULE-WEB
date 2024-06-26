@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/cui/navbar/navbar";
-import WaveLoader from "@/components/cui/wave-loader/wave-loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
