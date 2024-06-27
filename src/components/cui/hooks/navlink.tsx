@@ -8,15 +8,16 @@ interface NavLinkProps {
   href: string
   children: ReactNode
   className?: string
-  activeClassName?: string
+  activeClassName?: string,
+  onClick?: () => void; 
 }
 
-const NavLink: React.FC<NavLinkProps> = ({ href, children, className, activeClassName }) => {
+const NavLink: React.FC<NavLinkProps> = ({ href, children, className, activeClassName, onClick }) => {
   const pathname = usePathname();
   const isActive = pathname === href;
 
   return (
-    <Link href={href} className={`${className} ${isActive ? activeClassName : ''}`}>
+    <Link href={href} className={`${className} ${isActive ? activeClassName : ''}`} onClick={onClick}>
         {children}
     </Link>
   )

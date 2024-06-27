@@ -83,4 +83,23 @@ section.login-main-section .login-middle-section .login-main-form .form-controll
 }
 .login-auth-options a:hover {
   text-decoration: underline;
+}
+
+.error-handleing-styles {
+  border: 1px solid rgb(95, 6, 6);
+  padding: 6px 10px;
+  border-radius: 10px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: -moz-max-content;
+  width: max-content;
+  margin-top: 20px;
+  background-color: rgb(255, 161, 161);
+  color: rgb(var(--dark));
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 10px;
+  max-width: 100%;
 }/*# sourceMappingURL=login.css.map */
