@@ -16,10 +16,13 @@ import WaveLoader from '../wave-loader/wave-loader';
 import axiosAuthed from '../hooks/axiosInstances/axiosAuth';
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { usePrice } from "@/app/layout";
 
 const CartComponent = lazy(() => import('./cartComponent'));
 
 const Navbar = () => {
+  const { price, setPrice } = usePrice();
+  const { nProducts, setNProducts } = usePrice();
   const [menuIsOpened, setMenuIsOpened] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -27,6 +30,27 @@ const Navbar = () => {
     name: "",
     role: ""
   });
+
+  const calculateTotalPrice = () => {
+    let cart: any = localStorage.getItem('cart');
+
+    if (!cart) {
+      cart = {};
+    } else {
+      cart = JSON.parse(cart);
+    }
+
+    const total = Object.keys(cart).reduce((sum, key) => {
+      const product = cart[key];
+      return sum + product.price * product.quantity;
+    }, 0);
+
+    setPrice(total);
+  };
+
+  useEffect(() => {
+    calculateTotalPrice();
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -79,6 +103,44 @@ const Navbar = () => {
     }, 1000);
   }
 
+  // Traz todos incluindo com o quantity ------------ 
+  // const calculateTotalProducts = () => {
+    //   let cart:any = localStorage.getItem('cart');
+    
+    //   if (!cart) {
+  //     cart = {};
+  //   } else {
+  //     cart = JSON.parse(cart);
+  //   }
+
+  //   const total :any = Object.keys(cart).reduce((sum, key) => {
+  //     const product :any = cart[key];
+  //     return sum + product.quantity;
+  //   }, 0);
+
+  //   setNProducts(total);
+  // };
+  
+  // Traz todos incluindo com sem o quantity ------------ 
+  const calculateTotalProducts = () => {
+    let cart:any = localStorage.getItem('cart');
+
+    if (!cart) {
+        cart = {};
+    } else {
+        cart = JSON.parse(cart);
+    }
+
+    // Contar o número de diferentes tipos de produtos
+    const total = Object.keys(cart).length;
+
+    setNProducts(total);
+};
+
+  useEffect(() => {
+    calculateTotalProducts();
+  }, []);
+
   const suspesedComponent = (Component: any) => (
     <Suspense fallback={
       <div style={{
@@ -129,13 +191,13 @@ const Navbar = () => {
             <div className="assets-right">
               <div className="assets-right-copper">
                 <div className="assets-list-item">
-                  <span className="assets-money-emout">893,04 Kz</span>
+                  <span className="assets-money-emout">{price} Kz</span>
 
                   <Drawer>
                     <DrawerTrigger asChild>
                       <button className="menu-list-item">
                         <ShoppingCart />
-                        <div className="assets-item-counter">99+</div>
+                        {nProducts > 0 && <div className="assets-item-counter" style={{ minWidth: 20 }}>{nProducts}</div>}
                       </button>
                     </DrawerTrigger>
                     <DrawerContent style={{ maxHeight: "90vh", overflowY: "scroll" }} className='drawer-container'>

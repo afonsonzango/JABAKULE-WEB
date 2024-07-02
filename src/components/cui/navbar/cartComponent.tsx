@@ -1,11 +1,112 @@
 import { CircleOff, Minus, Plus, Printer, ShieldCheck, Trash2 } from 'lucide-react';
 
 import cartimages from "@/assets/midea/aditionals/cart_img.jpg";
-import computer from "@/assets/midea/products/computer.png";
 import Image from 'next/image';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { usePrice } from '@/app/layout';
 
 const CartComponent = () => {
+    const { price, setPrice } = usePrice();
+    const { setNProducts } = usePrice();
+    const [cartProducts, setCartProducts] = useState([]);
+    const [discountedTotal, setDiscountedTotal] = useState(0);
+    const iva = 0.14;
+
+    useEffect(() => {
+        const calculateDiscountedTotal = (totalPrice :any) => {
+            const discount = totalPrice * iva;
+            const discountedTotal = totalPrice + discount;
+            setDiscountedTotal(discountedTotal);
+        };
+
+        calculateDiscountedTotal(price);
+    }, [price]);
+
+    useEffect(() => {
+        const getCartProducts = () => {
+            let cart: any = localStorage.getItem('cart');
+            if (!cart) {
+                cart = {};
+            } else {
+                cart = JSON.parse(cart);
+            }
+
+            const productsArray: any = Object.keys(cart).map(key => cart[key]);
+
+            setCartProducts(productsArray);
+        };
+
+        getCartProducts();
+    }, []);
+
+    const updateQuantity = (productId: any, newQuantity: any) => {
+        if (newQuantity < 1) {
+            return;
+        }
+
+        let cart: any = localStorage.getItem('cart');
+
+        if (!cart) {
+            cart = {};
+        } else {
+            cart = JSON.parse(cart);
+        }
+
+        // Atualizar a quantidade do produto no localStorage
+        cart[productId].quantity = newQuantity;
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Atualizar o estado local para refletir a mudança
+        const updatedProducts: any = cartProducts.map((product: any) => {
+            if (product.id === productId) {
+                return { ...product, quantity: newQuantity };
+            }
+            return product;
+        });
+
+        setCartProducts(updatedProducts);
+        calculateTotalPrice();
+    };
+
+    const removeProduct = (productId: any, productPrice: any, productQuantity: any) => {
+        // Calcular o valor total do produto a ser removido e exibir no console
+        const totalPrice = productPrice * productQuantity;
+        setPrice(prev => prev - totalPrice);
+
+        // Remover o produto do localStorage
+        let cart: any = localStorage.getItem('cart');
+        if (!cart) {
+            cart = {};
+        } else {
+            cart = JSON.parse(cart);
+        }
+
+        delete cart[productId];
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Atualizar o estado local para refletir a remoção
+        const updatedProducts = cartProducts.filter((product: any) => product.id !== productId);
+        setCartProducts(updatedProducts);
+        setNProducts(prev => prev - 1);
+    };
+
+    const calculateTotalPrice = () => {
+        let cart: any = localStorage.getItem('cart');
+
+        if (!cart) {
+            cart = {};
+        } else {
+            cart = JSON.parse(cart);
+        }
+
+        const total = Object.keys(cart).reduce((sum, key) => {
+            const product = cart[key];
+            return sum + product.price * product.quantity;
+        }, 0);
+
+        setPrice(total);
+    };
+
     return (
         <div className="container">
             <div className="container-copper mb-8 mt-8">
@@ -22,40 +123,52 @@ const CartComponent = () => {
                         </div>
 
                         <div className="product-list">
-                            <div className="product mb-4">
-                                <div className="product-image">
-                                    <div>
-                                        <Image src={computer} alt={"Product image"} />
-                                    </div>
-                                </div>
-                                <div className='details-quantity-flex'>
-                                    <div className="product-details">
-                                        <div>
-                                            <div className="name">Computador Dell XDLY - 450XC</div>
-                                            <div className="price">
-                                                <span className='price-primary'>190.000,00 Kz</span>
-                                                <span className='price-singular'>190.000,00 Kz</span>
+                            {cartProducts.length === 0 ? (
+                                <p>O carrinho está vazio.</p>
+                            ) : (
+                                <>
+                                    {cartProducts.map((product: any) => {
+                                        return (
+                                            <div className="product mb-4">
+                                                <div className="product-image">
+                                                    <div>
+                                                        <img src={`http://${product.product_host}${product.image}`} alt={"Product image"} />
+                                                    </div>
+                                                </div>
+                                                <div className='details-quantity-flex'>
+                                                    <div className="product-details">
+                                                        <div>
+                                                            <div className="name">{product.name}</div>
+                                                            <div className="price">
+                                                                <span className='price-primary'>{product.price * product.quantity} Kz</span>
+                                                                <span className='price-singular'>{product.price} Kz</span>
+                                                            </div>
+                                                            <div className="detail">
+                                                                <span className='details-frete'>Frete: a negociar</span>
+                                                                product.name,                        <span className='details-loja'>- Loja: {product.user}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="quantity-section">
+                                                        <button onClick={() => updateQuantity(product.id, product.quantity - 1)}>
+                                                            <Minus />
+                                                        </button>
+                                                        <input type="text" value={product.quantity} readOnly />
+                                                        <button onClick={() => updateQuantity(product.id, product.quantity + 1)}>
+                                                            <Plus />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div className="delete-button">
+                                                    <button onClick={() => removeProduct(product.id, product.price, product.quantity)}>
+                                                        <Trash2 />
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div className="detail">
-                                                <span className='details-frete'>Frete: a negociar</span>
-                                                <span className='details-loja'>- Loja: (B. T. Saadou)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="quantity-section">
-                                        <button>
-                                            <Minus />
-                                        </button>
-                                        <input type="text" defaultValue={0} />
-                                        <button>
-                                            <Plus />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="delete-button">
-                                    <Trash2 />
-                                </div>
-                            </div>
+                                        )
+                                    })}
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -73,17 +186,17 @@ const CartComponent = () => {
                             <div className="c-flex-payment-container">
                                 <div className="inf-line mb-4">
                                     <div className="inf-item">Subtotal</div>
-                                    <div className="inf-item value">1.500.000,00</div>
+                                    <div className="inf-item value">{price} Kz</div>
                                 </div>
 
                                 <div className="inf-line mb-4">
                                     <div className="inf-item">IVA (Incluído)</div>
-                                    <div className="inf-item value">0,00</div>
+                                    <div className="inf-item value">14%</div>
                                 </div>
 
                                 <div className="inf-line devider">
                                     <div className="inf-item">Total</div>
-                                    <div className="inf-item value">1.500.000,00</div>
+                                    <div className="inf-item value">{discountedTotal} Kz</div>
                                 </div>
 
                                 <div className="actions-button">

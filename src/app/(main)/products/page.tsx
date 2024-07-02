@@ -10,6 +10,7 @@ import axiosSimple from "@/components/cui/hooks/axiosInstances/axiosSimple";
 import WaveLoader from "@/components/cui/wave-loader/wave-loader";
 import LoadingFailed from "@/components/cui/errors-layouts/loading-failed";
 import { Button } from "@/components/ui/button";
+import { usePrice } from "@/app/layout";
 
 interface Product {
     id: number;
@@ -43,10 +44,13 @@ interface Product {
 const limit = 20;
 
 export default function Page() {
+    const { price, setPrice } = usePrice();
+    const { nProducts, setNProducts } = usePrice();
     const [page, setPage] = useState<number>(1);
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState("");
+    const [imageHost, setImageHost] = useState("");
 
     const fetchPosts = async (page: number, limit: number) => {
         setLoading(true);
@@ -55,6 +59,8 @@ export default function Page() {
         try {
             const response = await axiosSimple.get(`/product/all/${page}/${limit}`);
             const newProducts = response.data.products;
+
+            setImageHost(response.data.fileHost);
 
             if (newProducts && newProducts.length !== 0) {
                 setProducts((prevProducts) => [...prevProducts, ...newProducts]);
@@ -73,7 +79,7 @@ export default function Page() {
     };
 
     const handleScroll = () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
             if (!loading) {
                 alert(1);
             }
@@ -89,6 +95,38 @@ export default function Page() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+
+    const addToCart = (product :any) => {
+        let cart:any = localStorage.getItem('cart');
+        
+        if (!cart) {
+            cart = {};
+        } else {
+            cart = JSON.parse(cart);
+        }
+
+        if (cart[product.id]) {
+            cart[product.id].quantity += 1;
+        } else {
+            cart[product.id] = {
+                id: product.id,
+                image: product.image,
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+                user: product.user.name,
+                product_host: imageHost
+            };
+        }
+
+        setPrice(prev => prev + Number(product.price));
+        setNProducts(prev => prev + 1);
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        console.log(`Produto ${product.name} adicionado ao carrinho`);
+    };
 
     return (
         <main className="main-container">
@@ -145,7 +183,7 @@ export default function Page() {
                                                     <span className="expired">89.093 AOA</span>
                                                 </button>
                                                 <div className="card-action mt-auto">
-                                                    <button className="card-reserve-btn py-2 px-4 flex items-center justify-center w-full">
+                                                    <button onClick={() => addToCart(product)} className="card-reserve-btn py-2 px-4 flex items-center justify-center w-full">
                                                         <ShoppingCart />
                                                         Adicionar ao carrinho
                                                     </button>
