@@ -133,11 +133,12 @@ const CartComponent = () => {
                                     {cartProducts.map((product: any, index: any) => {
                                         return (
                                             <div className="product mb-4" key={index}>
-                                                <div className="product-image">
-                                                    <div>
-                                                        <Image src={`http://${product.product_host}${product.image}`} alt={"Product image"} />
-                                                    </div>
-                                                </div>
+                                                <Image
+                                                    src={`http://${product.product_host || 'localhost:2000'}${product.image}`}
+                                                    alt={"Product image"}
+                                                    width={100}
+                                                    height={100}
+                                                />
                                                 <div className='details-quantity-flex'>
                                                     <div className="product-details">
                                                         <div>

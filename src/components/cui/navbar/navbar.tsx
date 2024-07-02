@@ -133,7 +133,6 @@ const Navbar = () => {
 
     // Contar o número de diferentes tipos de produtos
     const total = Object.keys(cart).length;
-
     setNProducts(total);
   }, [setNProducts]);
 
