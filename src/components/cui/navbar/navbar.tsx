@@ -31,7 +31,7 @@ const Navbar = () => {
     role: ""
   });
 
-  const calculateTotalPrice = () => {
+  const calculateTotalPrice = React.useCallback(() => {
     let cart: any = localStorage.getItem('cart');
 
     if (!cart) {
@@ -46,11 +46,11 @@ const Navbar = () => {
     }, 0);
 
     setPrice(total);
-  };
+  }, [setPrice]);
 
   useEffect(() => {
     calculateTotalPrice();
-  }, []);
+  }, [calculateTotalPrice]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -105,9 +105,9 @@ const Navbar = () => {
 
   // Traz todos incluindo com o quantity ------------ 
   // const calculateTotalProducts = () => {
-    //   let cart:any = localStorage.getItem('cart');
-    
-    //   if (!cart) {
+  //   let cart:any = localStorage.getItem('cart');
+
+  //   if (!cart) {
   //     cart = {};
   //   } else {
   //     cart = JSON.parse(cart);
@@ -120,26 +120,26 @@ const Navbar = () => {
 
   //   setNProducts(total);
   // };
-  
+
   // Traz todos incluindo com sem o quantity ------------ 
-  const calculateTotalProducts = () => {
-    let cart:any = localStorage.getItem('cart');
+  const calculateTotalProducts = React.useCallback(() => {
+    let cart: any = localStorage.getItem('cart');
 
     if (!cart) {
-        cart = {};
+      cart = {};
     } else {
-        cart = JSON.parse(cart);
+      cart = JSON.parse(cart);
     }
 
     // Contar o número de diferentes tipos de produtos
     const total = Object.keys(cart).length;
 
     setNProducts(total);
-};
+  }, [setNProducts]);
 
   useEffect(() => {
     calculateTotalProducts();
-  }, []);
+  }, [calculateTotalProducts]);
 
   const suspesedComponent = (Component: any) => (
     <Suspense fallback={

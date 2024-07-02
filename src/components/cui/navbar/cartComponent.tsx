@@ -1,4 +1,4 @@
-import { CircleOff, Minus, Plus, Printer, ShieldCheck, Trash2 } from 'lucide-react';
+import { CircleOff, Minus, Plus, Printer, ShieldCheck, ShoppingCartIcon, Trash2 } from 'lucide-react';
 
 import cartimages from "@/assets/midea/aditionals/cart_img.jpg";
 import Image from 'next/image';
@@ -13,7 +13,7 @@ const CartComponent = () => {
     const iva = 0.14;
 
     useEffect(() => {
-        const calculateDiscountedTotal = (totalPrice :any) => {
+        const calculateDiscountedTotal = (totalPrice: any) => {
             const discount = totalPrice * iva;
             const discountedTotal = totalPrice + discount;
             setDiscountedTotal(discountedTotal);
@@ -124,15 +124,18 @@ const CartComponent = () => {
 
                         <div className="product-list">
                             {cartProducts.length === 0 ? (
-                                <p>O carrinho está vazio.</p>
+                                <div className="flex flex-col items-center justify-center mt-10 p-6 py-14 px-14 bg-gray-100 rounded-lg">
+                                    <ShoppingCartIcon size={48} className="text-gray-500 mt-4" />
+                                    <p className="text-lg font-semibold text-gray-700">O carrinho está vazio, adicione produtos para poder comprar.</p>
+                                </div>
                             ) : (
                                 <>
-                                    {cartProducts.map((product: any) => {
+                                    {cartProducts.map((product: any, index: any) => {
                                         return (
-                                            <div className="product mb-4">
+                                            <div className="product mb-4" key={index}>
                                                 <div className="product-image">
                                                     <div>
-                                                        <img src={`http://${product.product_host}${product.image}`} alt={"Product image"} />
+                                                        <Image src={`http://${product.product_host}${product.image}`} alt={"Product image"} />
                                                     </div>
                                                 </div>
                                                 <div className='details-quantity-flex'>

@@ -5,7 +5,7 @@ import "@/assets/styles/pages/main/products/products.css";
 import _product from "@/assets/midea/products/computer.png";
 import { ServerCrash, Settings2, ShoppingCart, TrendingUp } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axiosSimple from "@/components/cui/hooks/axiosInstances/axiosSimple";
 import WaveLoader from "@/components/cui/wave-loader/wave-loader";
 import LoadingFailed from "@/components/cui/errors-layouts/loading-failed";
@@ -41,16 +41,16 @@ interface Product {
     } | null;
 }
 
-const limit = 20;
 
 export default function Page() {
-    const { price, setPrice } = usePrice();
-    const { nProducts, setNProducts } = usePrice();
+    const { setPrice } = usePrice();
+    const { setNProducts } = usePrice();
     const [page, setPage] = useState<number>(1);
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState("");
     const [imageHost, setImageHost] = useState("");
+    const limit = 20;
 
     const fetchPosts = async (page: number, limit: number) => {
         setLoading(true);
@@ -74,37 +74,34 @@ export default function Page() {
         } finally {
             setTimeout(() => {
                 setLoading(false);
-            }, 1000);
+            }, 5000);
         }
     };
 
-    const handleScroll = () => {
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    const handleScroll = useCallback(() => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
             if (!loading) {
-                alert(1);
+                fetchPosts(page, limit);
             }
         }
-    };
+    }, [fetchPosts, loading, page, limit]);
 
     useEffect(() => {
         fetchPosts(page, limit);
+    }, [fetchPosts, page, limit]);
 
+    useEffect(() => {
         window.addEventListener('scroll', handleScroll);
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [handleScroll]);
 
+    const addToCart = (product: any) => {
+        let cart: any = localStorage.getItem('cart');
 
-    const addToCart = (product :any) => {
-        let cart:any = localStorage.getItem('cart');
-        
-        if (!cart) {
-            cart = {};
-        } else {
-            cart = JSON.parse(cart);
-        }
+        if (!cart) { cart = {}; } else { cart = JSON.parse(cart); }
 
         if (cart[product.id]) {
             cart[product.id].quantity += 1;
@@ -130,72 +127,72 @@ export default function Page() {
 
     return (
         <main className="main-container">
-            {loading ? <WaveLoader style={{ marginTop: 20 }} /> : (
-                error === "" ? (
-                    products.length !== 0 ? (<>
-                        <div className="container top-bar-container mt-6 mb-4">
-                            <div className="cat-title">Navegue pelos produtos</div>
+            {error === "" ? (
+                products.length !== 0 ? (<>
+                    <div className="container top-bar-container mt-6 mb-4">
+                        <div className="cat-title">Navegue pelos produtos</div>
 
-                            <TooltipProvider>
-                                <div className="cat-actions">
-                                    <Tooltip>
-                                        <TooltipTrigger className="action">
-                                            <TrendingUp />
-                                            Por popularidade
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p style={{ fontSize: 13, fontWeight: 500 }}>Filtrar produtos por popularidade</p>
-                                        </TooltipContent>
-                                    </Tooltip>
+                        <TooltipProvider>
+                            <div className="cat-actions">
+                                <Tooltip>
+                                    <TooltipTrigger className="action">
+                                        <TrendingUp />
+                                        Por popularidade
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p style={{ fontSize: 13, fontWeight: 500 }}>Filtrar produtos por popularidade</p>
+                                    </TooltipContent>
+                                </Tooltip>
 
-                                    <Tooltip>
-                                        <TooltipTrigger className="action">
-                                            <Settings2 />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p style={{ fontSize: 13, fontWeight: 500 }}>Customizar filtro</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </div>
-                            </TooltipProvider>
-                        </div>
-                        <div className="container mx-auto px-4 py-4 products-container">
-                            <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                                {products.map((product, index) => {
-                                    return (
-                                        <div key={index} className="card mb-5 flex flex-col">
-                                            <div className="card-body flex flex-col flex-grow">
-                                                <div className="card-image relative">
-                                                    <Image src={_product} alt={"Computer product image"} />
-                                                    <div className="card-discount">14% Disconto</div>
-                                                    <div className="card-trend">
-                                                        Up <TrendingUp />
-                                                    </div>
-                                                </div>
-                                                <div className="card-title mb-1 uppercase">
-                                                    {product.user?.name}
-                                                </div>
-                                                <div className="card-name mb-1">
-                                                    {product.name}
-                                                </div>
-                                                <button className="card-value mb-2">
-                                                    <span>{product.price} </span>
-                                                    <span className="expired">89.093 AOA</span>
-                                                </button>
-                                                <div className="card-action mt-auto">
-                                                    <button onClick={() => addToCart(product)} className="card-reserve-btn py-2 px-4 flex items-center justify-center w-full">
-                                                        <ShoppingCart />
-                                                        Adicionar ao carrinho
-                                                    </button>
+                                <Tooltip>
+                                    <TooltipTrigger className="action">
+                                        <Settings2 />
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p style={{ fontSize: 13, fontWeight: 500 }}>Customizar filtro</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
+                        </TooltipProvider>
+                    </div>
+                    <div className="container mx-auto px-4 py-4 products-container">
+                        <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                            {products.map((product, index) => {
+                                return (
+                                    <div key={index} className="card mb-5 flex flex-col">
+                                        <div className="card-body flex flex-col flex-grow">
+                                            <div className="card-image relative">
+                                                <Image src={_product} alt={"Computer product image"} />
+                                                <div className="card-discount">14% Disconto</div>
+                                                <div className="card-trend">
+                                                    Up <TrendingUp />
                                                 </div>
                                             </div>
+                                            <div className="card-title mb-1 uppercase">
+                                                {product.user?.name}
+                                            </div>
+                                            <div className="card-name mb-1">
+                                                {product.name}
+                                            </div>
+                                            <button className="card-value mb-2">
+                                                <span>{product.price} </span>
+                                                <span className="expired">89.093 AOA</span>
+                                            </button>
+                                            <div className="card-action mt-auto">
+                                                <button onClick={() => addToCart(product)} className="card-reserve-btn py-2 px-4 flex items-center justify-center w-full">
+                                                    <ShoppingCart />
+                                                    Adicionar ao carrinho
+                                                </button>
+                                            </div>
                                         </div>
-                                    );
-                                })}
-                            </div>
+                                    </div>
+                                );
+                            })}
                         </div>
-                    </>) : (
-                        <>
+                    </div>
+                </>) : (
+                    <>
+                        {!loading &&
                             <div className="error-handleing">
                                 <LoadingFailed Icon={ServerCrash} title={"Sem produtos!"} description={"Infelizmente estamos sem produtos disponiveis, mas estaremos de volta brevemente"} />
 
@@ -203,17 +200,21 @@ export default function Page() {
                                     <Button onClick={() => fetchPosts(page, limit)}>Tentar novamente</Button>
                                 </div>
                             </div>
-                        </>
-                    )
-                ) : (
-                    <div className="error-handleing">
+                        }
+                    </>
+                )
+            ) : (
+                <>
+                    {!loading && <div className="error-handleing">
                         <LoadingFailed Icon={ServerCrash} title={"Erro ao buscar produtos"} description={"Alguma coisa aconteceu ao buscar produtos, porfavor tente novamente mais tarde"} />
                         <div className="button-position-handleing">
                             <Button onClick={() => fetchPosts(page, limit)}>Tentar novamente</Button>
                         </div>
-                    </div>
-                )
+                    </div>}
+                </>
             )}
+
+            {loading ? <WaveLoader style={{ marginTop: 20, marginBottom: 20 }} /> : "Nao carregando..."}
         </main>
     );
 }

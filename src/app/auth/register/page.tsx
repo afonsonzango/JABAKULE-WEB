@@ -242,9 +242,9 @@ const Page = () => {
                               <SelectGroup>
                                 <SelectLabel>Selecione seu pais</SelectLabel>
 
-                                {countries?.map((country: any) => {
+                                {countries?.map((country: any, index: any) => {
                                   return (
-                                    <SelectItem value={country.name}>{country.name}</SelectItem>
+                                    <SelectItem key={index} value={country.name}>{country.name}</SelectItem>
                                   )
                                 })}
                               </SelectGroup>
